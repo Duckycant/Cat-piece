@@ -1,0 +1,31 @@
+local PabloLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/BatuKvi123/PabloLibV3/main/PabloLibV3"))()
+local window = PabloLib:Create("cat piece --made by DUCKYCANT_QUACK1")
+
+---Tabs---
+
+local tab1 = window:CreateTab("cat piece premium gui")
+local tab2 = window:CreateTab("INF STATS")
+
+---buttons---
+
+tab1:CreateButton("cat piece gui", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VoltzyX/PublicScripts/main/CatPiece.lua"))()
+end)
+
+tab1:CreateTextbox("Change your Speed", function(a)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = a
+print(a)
+end)
+
+tab1:CreateTextbox("Change your Jumppower", function(a)
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = a
+print(a)
+end)
+
+tab2:CreateButton("INF stats cat piece", function()
+loadstring(game:HttpGet("https://paste.gg/p/Voltzy/61f202a4744d4887a6fe36220378e6e4/files/1e910768f1924748abcb753525370b04/raw"))()
+end)
+
+---WARING---
+
+tab1:CreateWarning("enjoy")
