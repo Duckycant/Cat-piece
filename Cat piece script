@@ -12,6 +12,17 @@ tab1:CreateButton("cat piece gui", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VoltzyX/PublicScripts/main/CatPiece.lua"))()
 end)
 
+tab1:CreateToggle("Toggle", function(state)
+if state then
+print("Enabled!")
+else
+print("Disabled!")
+end)
+
+tab1:CreateSlider("Slider", 0, 100, function(arg)
+print(arg)
+end)
+
 tab1:CreateTextbox("Change your Speed", function(a)
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = a
 print(a)
