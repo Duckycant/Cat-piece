@@ -1,0 +1,37 @@
+-- Load PabloLib
+local PabloLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/BatuKvi123/PabloLibV3/main/PabloLibV3"))()
+
+-- Create window
+local window = PabloLib:Create(
+    "INF Stats", -- Window title
+    "Enabled", -- Draggable status
+    "p" -- Keybind to open/close
+)
+
+-- Create tab
+local tab = window:CreateTab("INF STATS")
+
+-- Create toggle for infinite stats
+local infiniteStatsToggle = tab:CreateToggle("Infinite Stats", function(isEnabled)
+    if isEnabled then
+        -- Enable infinite stats
+        while isEnabled do
+            -- Locate player's character
+            local character = game.Players.LocalPlayer.Character
+            if character then
+                -- Access character's humanoid
+                local humanoid = character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    -- Set stats to a high value
+                    humanoid.Health = math.huge
+                    humanoid.MaxHealth = math.huge
+                    humanoid.WalkSpeed = 100
+                    humanoid.JumpPower = 100
+                end
+            end
+            wait(0.1) -- Adjust as needed for performance
+        end
+    else
+        -- Disable infinite stats (not needed for this specific toggle)
+    end
+end)
