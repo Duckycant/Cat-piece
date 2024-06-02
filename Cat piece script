@@ -1,31 +1,85 @@
+-- Load PabloLib
 local PabloLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/BatuKvi123/PabloLibV3/main/PabloLibV3"))()
-local window = PabloLib:Create("cat piece --made by DUCKYCANT_QUACK1")
 
+local window = PabloLib:Create(
+"Name", -- cat piece mabe by duckycant_quack1
+"Enabled", -- If you want draggable set here to "Enabled" if you dont want set to "Disabled".
+"p" -- You can put any keybind here to open close.
+)
 ---Tabs---
 
-local tab1 = window:CreateTab("cat piece premium gui")
-local tab2 = window:CreateTab("INF STATS")
+local tab1 = window:CreateTab("INF STATS")
 
----buttons---
+---Buttons---
 
-tab1:CreateButton("cat piece gui", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/VoltzyX/PublicScripts/main/CatPiece.lua"))()
+tab1:CreateButton("INF stats cat piece", function() loadstring(game:HttpGet("https://paste.gg/p/Voltzy/61f202a4744d4887a6fe36220378e6e4/files/1e910768f1924748abcb753525370b04/raw"))()
 end)
 
-tab1:CreateTextbox("Change your Speed", function(a)
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = a
-print(a)
+tab1:CreateTextbox("Change your Speed", function(a)   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = a
+    print(a)
 end)
 
-tab1:CreateTextbox("Change your Jumppower", function(a)
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = a
-print(a)
+tab1:CreateTextbox("Change your Jumppower", function(a) game.Players.LocalPlayer.Character.Humanoid.JumpPower = a
+    print(a)
 end)
 
-tab2:CreateButton("INF stats cat piece", function()
-loadstring(game:HttpGet("https://paste.gg/p/Voltzy/61f202a4744d4887a6fe36220378e6e4/files/1e910768f1924748abcb753525370b04/raw"))()
+---Toggle for Infinite Health---
+local infiniteHealthEnabled = false
+local infiniteHealthConnection
+
+local function setInfiniteHealth()
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    if character then
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.Health = math.huge
+            humanoid.MaxHealth = math.huge
+
+            -- Ensure health stays infinite
+            if infiniteHealthConnection then
+                infiniteHealthConnection:Disconnect()
+            end
+
+            infiniteHealthConnection = humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+                if infiniteHealthEnabled then
+                    humanoid.Health = math.huge
+                end
+            end)
+
+            humanoid:GetPropertyChangedSignal("MaxHealth"):Connect(function()
+                if infiniteHealthEnabled then
+                    humanoid.MaxHealth = math.huge
+                end
+            end)
+        end
+    end
+end
+
+tab1:CreateToggle("Infinite Health", function(isEnabled)
+    infiniteHealthEnabled = isEnabled
+
+    if infiniteHealthEnabled then
+        -- Apply infinite health immediately
+        setInfiniteHealth()
+
+        -- Connect to CharacterAdded to reapply when character respawns
+        game.Players.LocalPlayer.CharacterAdded:Connect(setInfiniteHealth)
+    elseif infiniteHealthConnection then
+        infiniteHealthConnection:Disconnect()
+        infiniteHealthConnection = nil
+
+        -- Reset health to normal if the toggle is disabled
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.Health = humanoid.MaxHealth
+            end
+        end
+    end
 end)
 
----WARING---
-
+---Warning---
 tab1:CreateWarning("enjoy")
